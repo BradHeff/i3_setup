@@ -8,7 +8,7 @@ import shutil
 # global declares
 HOME = "/home/pheonix/"     # Path must end with /
 SCRIPT_DIR = os.path.realpath(__file__)        # get the script path **(do not change)**
-DEBUG = True       # enable / disable shutil functions
+DEBUG = False       # enable / disable shutil functions
 
 
 def Setup(argv):
