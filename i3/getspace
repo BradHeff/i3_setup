@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ $1 = "home" ]; then
+df -Ph $PWD | tail -1 | awk '{ print $4}'
+else
+df -Ph / | tail -1 | awk '{ print $4}'
+fi

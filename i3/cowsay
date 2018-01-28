@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python /home/pheonix/.i3/cow.py "$*"

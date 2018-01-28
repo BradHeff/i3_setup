@@ -1,0 +1,30 @@
+#!/bin/bash
+lock="/home/pheonix/.config/i3/lock3.png"
+wall="/home/pheonix/Pictures/lightning_blow_elements_category_person_burro_fright_mills_mountains_painting_art_52114_1920x1080.jpg"
+if [ ! -f "$lock" ] 
+then
+	echo "No $lock"
+else
+	if [ ! -f "$wall" ] 
+	then
+		echo "no $wall"
+	else
+		if [ ! -f /tmp/screen.png ] 
+		then
+			if [ ! -f /tmp/screen1.png ] 
+			then
+				convert "$wall" -gravity center "$lock" -composite -matte /tmp/screen1.png
+			fi
+
+			if [ ! -f /tmp/screen2.png ] 
+			then
+				cp /tmp/screen1.png /tmp/screen2.png
+			fi
+
+			montage /tmp/screen1.png /tmp/screen2.png -geometry +0+0 /tmp/screen.png
+		fi
+	fi
+
+	i3lock -e -i /tmp/screen.png
+	xset dpms force off
+fi
