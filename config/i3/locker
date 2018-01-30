@@ -1,0 +1,21 @@
+#!/bin/sh
+
+lock="/home/pheonix/.config/i3/lock5.png"
+base_DIR="/home/pheonix/Pictures/IMG.png"
+if [ ! -f "$lock" ]
+then
+	echo "no $lock"
+else
+	DISPLAY=:0 scrot -q 100 -e 'mv $f /home/pheonix/Pictures/IMG.png'
+	convert "$base_DIR"  -channel RGBA  -blur 0x5  "$base_DIR"
+	convert "$base_DIR" -gravity southwest "$lock" -composite -matte "$base_DIR"
+	
+	revert() {
+              xset dpms 0 0 0
+        }
+        trap revert SIGHUP SIGINT SIGTERM
+        xset +dpms dpms 5 5 5
+	i3lock -e -u -n -f -p win -i "$base_DIR"
+	#xset dpms force off
+	revert
+fi
