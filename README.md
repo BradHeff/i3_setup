@@ -2,7 +2,7 @@
 
 i3wm setup script makes setting up my i3 setup automation and easy
 
-(screen.png)
+[](screen.png)
 
 ## Clone
 
