@@ -4,11 +4,12 @@
 import os
 import sys
 import shutil
+import classes
 
 # global declares
 HOME = "/home/pheonix/"     # Path must end with /
 SCRIPT_DIR = os.path.realpath(__file__)        # get the script path **(do not change)**
-DEBUG = False       # enable / disable shutil functions
+DEBUG = True       # enable / disable debuging (if enabled the script will NOT copy the files)
 
 
 def Setup(argv):
@@ -68,16 +69,16 @@ def copy_i3_config():
         os.makedirs(HOME + ".i3")
 
     for fl in os.listdir("i3/"):
-        if not DEBUG:
-            shutil.copy("i3/" + fl, HOME + ".i3/" + fl)
-        print("Copying i3/" + fl + " to " + HOME + ".i3/" + fl)
+        if os.path.isfile("i3/" + fl):
+            if not DEBUG:
+                shutil.copy("i3/" + fl, HOME + ".i3/" + fl)
+            print("Copying i3/" + fl + " to " + HOME + ".i3/" + fl)
 
-    for fl in os.listdir(os.path.dirname(SCRIPT_DIR)):
-        if not os.path.isdir(fl):
-            if not fl == "setup.py":
-                if not DEBUG:
-                    shutil.copy(fl, HOME + fl)
-                print("Copying " + fl + " to " + HOME + fl)
+    for fl in os.listdir("home/"):
+        if os.path.isfile("home/" + fl):
+            if not DEBUG:
+                shutil.copy("home/" + fl, HOME + fl)
+            print("Copying home/" + fl + " to " + HOME + fl)
 
 
 # copy the i3lock files
@@ -93,16 +94,41 @@ def copy_i3lock():
 
 # copy the /home configuration files
 def copy_configs():
-    if not os.path.exists(HOME + ".config"):
-        os.makedirs(HOME + ".config")
-    for fl in os.listdir("config"):
-        if os.path.isdir("config/" + fl):
+    if not os.path.exists(HOME + ".config/neofetch"):
+        os.makedirs(HOME + ".config/neofetch")
+    if not os.path.exists(HOME + ".config/cava"):
+        os.makedirs(HOME + ".config/cava")
+    if not os.path.exists(HOME + ".config/ranger"):
+        os.makedirs(HOME + ".config/ranger")
+
+    for fl in os.listdir("config/neofetch"):
+        if os.path.isfile("config/neofetch/" + fl):
             if not DEBUG:
-                shutil.copytree("config/" + fl, HOME + ".config/" + fl)
-            if not fl == "i3":
-                print("Copying config/" + fl + " to " + HOME + ".config/" + fl)
+                shutil.copy("config/neofetch/" + fl, HOME + ".config/neofetch" + fl)
+            print("Copying config/neofetch/" + fl + " to " + HOME + ".config/neofetch/" + fl)
+
+    for fl in os.listdir("config/ranger"):
+        if os.path.isfile("config/ranger/" + fl):
+            if not DEBUG:
+                shutil.copy("config/ranger/" + fl, HOME + ".config/ranger" + fl)
+            print("Copying config/ranger/" + fl + " to " + HOME + ".config/ranger/" + fl)
+
+    for fl in os.listdir("config/cava"):
+        if os.path.isfile("config/cava/" + fl):
+            if not DEBUG:
+                shutil.copy("config/cava/" + fl, HOME + ".config/cava" + fl)
+            print("Copying config/cava/" + fl + " to " + HOME + ".config/cava/" + fl)
 
 
 # run the script
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        files = classes.CheckFiles()
+        if files.check_configs() and files.check_i3() and files.check_lock() \
+                and files.check_home():
+            print("---------------------------------")
+            print("Check Success ........")
+            print("---------------------------------")
+        else:
+            print("some config files not found")
     Setup(sys.argv)
