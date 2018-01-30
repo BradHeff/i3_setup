@@ -2,6 +2,8 @@
 
 i3wm setup script makes setting up my i3 setup automation and easy
 
+(screen.png)
+
 ## Clone
 
 If you want to run script from a local file or if you want to make your own modifications just clone the repository into your local filesystem:
