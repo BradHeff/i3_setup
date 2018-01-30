@@ -9,7 +9,7 @@ import classes
 # global declares
 HOME = "/home/pheonix/"     # Path must end with /
 SCRIPT_DIR = os.path.realpath(__file__)        # get the script path **(do not change)**
-DEBUG = True       # enable / disable debuging (if enabled the script will NOT copy the files)
+DEBUG = False       # enable / disable debuging (if enabled the script will NOT copy the files)
 
 
 def Setup(argv):
@@ -58,7 +58,7 @@ def showhelp(bools):
     print("--all            install all configuration files")
     print("--i3             install only the .i3 config and ~/ configuration files")
     print("--i3lock         install only the i3lock files ~/.config/i3")
-    print("--config         install only the .configuration files")
+    print("--config         install only the .config files ~/.config/*")
     print("")
     print("Use -h to see commands again")
 
@@ -122,14 +122,20 @@ def copy_configs():
 
 # run the script
 if __name__ == '__main__':
+    nothelp = True
     if len(sys.argv) > 1:
-        files = classes.CheckFiles()
-        if files.check_configs() and files.check_i3() and files.check_lock() \
-                and files.check_home():
-            print("---------------------------------")
-            print("Check Success ........")
-            print("---------------------------------")
-        else:
-            print("some config files not found")
+        for arg in sys.argv:
+            if arg == "-h":
+                nothelp = False
+
+        if nothelp:
+            files = classes.CheckFiles()
+            if files.check_configs() and files.check_i3() and files.check_lock() \
+                    and files.check_home():
+                print("---------------------------------")
+                print("Check Success ........")
+                print("---------------------------------")
+            else:
+                print("some config files not found")
     Setup(sys.argv)
 
