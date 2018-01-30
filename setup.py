@@ -7,7 +7,7 @@ import shutil
 import classes
 
 # global declares
-HOME = "/home/pheonix/"     # Path must end with /
+HOME = "/home/pheonix/"     # Path must end with / (change to your home directory
 SCRIPT_DIR = os.path.realpath(__file__)        # get the script path **(do not change)**
 DEBUG = False       # enable / disable debuging (if enabled the script will NOT copy the files)
 
